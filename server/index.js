@@ -1,30 +1,29 @@
-//1. install http express mongoose
+//imports from packages
 
+const e = require('express');
 const express = require('express');
-//import 'package:express/express.dart'
+const mongoose = require('mongoose');
+
+//imports from other files
+const authRouter = require("./routes/auth");
+
+
+
+//init
 const PORT = 3000;
-
 const app = express();
+const DB = "mongodb+srv://chulez:tjdtnr1288@cluster0.ovsdisg.mongodb.net/?retryWrites=true&w=majority";
 
-//2. creating and api
-//http://<your address>/hello-world
+//middleware
+app.use(express.json());
+app.use(authRouter);
 
-//create a GET Request giving a json response with key of name
-// and value of your name
-//{
-//     'name': 'Rivvan'
-// }
+//connections
+mongoose.connect(DB).then(() => { console.log("Connection Successful"); }).catch((e) => { console.log(e); });
 
-app.get('/', (req, res) => {
-    res.json({ name: 'Rivaan' });
-});
 
-app.get('/hello-world', (req, res) => {
-    res.json({ hi: 'hello world' });
-});
-//GET, PUT, POST, DELETE, UPDATE => CRUD
+
 app.listen(PORT, () => {
     console.log(`connected at port ${PORT}`);
 });
-//localhost
 
